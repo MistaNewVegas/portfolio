@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daniel Biel Portfolio</title>
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    />
+
+    <link href="css/styles.css" rel="stylesheet"/>
+    <style>
+        .hero-section {
+            background-color: #000000 !important;
+            text-align: left;
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 10vw;
+        }
+
+        .hero-section img {
+            width: 45%;
+            height: auto;
+        }
+
+        .hero-text {
+            margin-left: 10%;
+            margin-bottom: 4vw;
+        }
+        .hero-text h1 {
+            font-size: 4vw;
+            font-style: italic;
+        }
+
+        .hero-text hr {
+            border: 0.1vw solid white;
+            opacity: 1;
+            margin: 0 auto;
+        }
+
+        .hero-text h2 {
+            font-size: 3.5vw;
+            font-style: italic;
+        }
+
+        .content-section {
+            background-color: #000000 !important;
+            padding: 50px 20px;
+        }
+
+
+        .table {
+            background-color: #000000 !important;
+            border-color: #222;
+        }
+        .table td {
+            border: solid 2px white;
+        }
+
+        .modal-body {
+            font-family: "Rockwell", serif;
+            font-style: italic;
+            font-weight: bold;
+            font-size: 1.1vw;
+            text-align: center;
+            background-color: #000000;
+
+        }
+
+        .modal-content {
+            background-color: #000000;
+            border: 1px solid #ffffff; 
+            border-radius: 5px; 
+            overflow: hidden;
+        }
+
+        .modal-header, .modal-footer {
+            border: none;
+            margin: 0 auto;
+        }
+
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        hr {
+            border: 1vw solid #000000;
+            opacity: 1;
+            margin: 0 auto;
+        }
+
+        .vr {
+            border: 1px solid #fff;
+        }
+
+        .hero-section .flex-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .hero-section .self-portrait {
+            max-width: 100%;
+            height: auto;
+            order: 2;
+        }
+
+        .hero-section .hero-text {
+            order: 1;
+        }
+
+        .bottom-rounded {
+            border-radius: 0 0 35% 35%; /* Only round the bottom-left and bottom-right corners */
+        }
+
+        /* On mobile screens, swap the order */
+        @media (max-width: 768px) {
+            .hero-section .self-portrait {
+                order: 1;
+            }
+            .hero-section .hero-text {
+                order: 2;
+            }
+
+            .hero-section img {
+                width: 100%;
+            }
+
+            .hero-text {
+                margin: 0 auto;
+            }
+
+            .hero-section {
+                text-align: center;
+                align-items: center;
+                justify-content: space-between;
+                padding-top: 10vw;
+            }
+
+            .hero-text h1 {
+                font-size: 10vw;
+            }
+
+            .hero-text h2 {
+                font-size: 7vw;
+            }
+
+            .hero-buttons {
+                margin-top: 1vw;
+            }
+        }
+
+
+
+    </style>
+    
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand logo-text" href="index.html">Daniel Biel</a>
+    
+            <!-- Hamburger Button for Mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <!-- Collapsible Navigation Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="portfolio.html">Work</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="resume.html">Resume</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="flex-container">
+            <img class="self-portrait bottom-rounded" src="media/images/self-portrait.png" alt="portrait of myself with a spreadsheet background, i look upset or confused for some reason">
+            <div class="hero-text">
+                <h1>I'm Daniel Biel</h1>
+                <hr>
+                <h2>a problem solver with a<br>love for numbers</h2>
+                <div class="hero-buttons">
+                    <a href="contact.html" class="btn btn-outline-light btn-lg me-3">Get in Touch</a>
+                    <button class="btn btn-outline-light btn-lg me-3" data-bs-toggle="modal" data-bs-target="#dailyWisdomModal">
+                        Daily Wisdom
+                    </button>
+                </div>
+            </div>
+        </div>          
+    </section>
+
+    <hr>
+    
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <!-- Row 1: About Me Paragraph -->
+            <div class="row mb-5">
+                <div class="col text-center">
+                    <h3 class="mb-4">Featured Projects</h3>
+                    <div id="featuredProjectsCarousel" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        <!-- Carousel Item 1 -->
+                        <div class="carousel-item active">
+                          <a href="portfolio.html">
+                            <img src="media/images/project_images/CAM_LANDING.png" class="d-block mx-auto w-50" alt="Project 1">
+                          </a>
+                          <div class="mt-3">
+                            <h5>CAM Consulting</h5>
+                            <p>An AI-enabled language data driven financial analysis software for small business</p>
+                          </div>
+                        </div>
+                        <!-- Carousel Item 2 -->
+                        <div class="carousel-item">
+                          <a href="project2.html">
+                            <img src="media/images/project_images/Assembly_landing.png" class="d-block mx-auto w-50" alt="Project 2">
+                          </a>
+                          <div class="mt-3">
+                            <h5>Assembly dot Com</h5>
+                            <p>My first attempt at designing a website - I've learned a lot since then!</p>
+                          </div>
+                        </div>
+                        <!-- Add more carousel items as needed -->
+                      </div>
+                      <!-- Carousel Controls -->
+                      <button class="carousel-control-prev" type="button" data-bs-target="#featuredProjectsCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#featuredProjectsCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                    </div>
+                  </div>
+                  
+            </div>
+    
+            <!-- Row 2: Table of Facts and Featured Project Carousel -->
+            <div class="row justify-content-between">
+                <div class="col-md-5">
+                    <h2>I'm Daniel.</h2>
+                    <p>
+                        A motivated student and professional currently located
+                        in Mississauga, Ontario. I believe that the chaotic
+                        world around us only appears so to the untrained eye —
+                        everything can be explained with enough analysis. I have
+                        an obsession with the stories that data can tell, how it
+                        can explain even the smallest changes. 
+                        <br><br>
+                        I hope to blend creativity with meticulous precision in
+                        my work and strive to make meaningful impact across
+                        various fields.
+                        <br><br>
+                        This is my second attempt at a portfolio website, so feel free to explore it. Leave feedback in the contact section, try to break it, whatever. I also need to think of better things to write in a section like this. 
+
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h3>Quick Facts</h3>
+                    <table class="table text-white">
+                        <tbody>
+                            <tr>
+                                <td><strong>Professional Skills</strong></td>
+                                <td>Data Analysis, Interpretation, Visualization, Business Analysis & Optimization</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Personal Interests</strong></td>
+                                <td>Numbers, Maps, History, and the great outdoors</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Favorite Tools</strong></td>
+                                <td>Python, R, SQL, Power BI, Excel</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Languages (Human)</strong></td>
+                                <td>English, French, Polish, German</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Languages (Computer)</strong></td>
+                                <td>Python, R, SQL, Rust, HTML/CSS, JavaScript</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Favorite Project</strong></td>
+                                <td>CAM for Retail — empowering retailers with AI insights</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    <div class="modal fade" id="dailyWisdomModal" tabindex="-1" aria-labelledby="dailyWisdomModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dailyWisdomModalLabel">Daily Wisdom</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    I am not nearly as angry or scared as I look.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Alright</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Whatever</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer bg-dark py-4">
+        <div class="container text-center">
+            <ul class="nav justify-content-center align-items-center">
+                <li class="nav-item"><a href="portfolio.html" class="nav-link">Work</a></li>
+                <li class="nav-item"><a href="resume.html" class="nav-link">Resume</a></li>
+                <li class="nav-item">
+                    <a href="" class="navbar-brand logo-text">Daniel Biel</a>
+                </li>
+                <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
