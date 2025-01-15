@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/styles.css" rel="stylesheet"/>
+
+    <style>
+        body {
+            margin-top: 10vw;
+        }
+
+        .post-info {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        hr {
+            margin: 5;
+            margin-top: 0;
+            opacity: 1;
+        }
+
+        footer {
+            margin-top: 5vw;
+        }
+
+
+        .hero {
+            position: relative; /* Enables overlay positioning */
+            color: white; /* Ensure text is readable */
+            text-align: center;
+            padding: 5rem;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
+            z-index: 1; /* Place overlay on top of background */
+        }
+
+        .hero h1, .hero h2 {
+            position: relative; /* Place text above overlay */
+            z-index: 2; /* Ensure text appears above the overlay */
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand logo-text" href="index.html">Daniel Biel</a>
+    
+            <!-- Hamburger Button for Mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <!-- Collapsible Navigation Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="portfolio.html">Work</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="resume.html">Resume</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero mt-5" id="hero">
+        <div class="overlay"></div>
+        <h1 id="post-title"></h1>
+        <h2 id="post-subtitle"></h2>
+    </div>
+
+    <div class="container mt-5" name="content">
+        <hr>
+        <div class="post-info">
+            <p><strong>Category:</strong> <span id="post-category"></span></p>
+            <p><small id="post-date"></small></p>
+        </div>
+        <hr>
+        <div id="post-content"></div>
+    </div>
+
+    <footer class="footer bg-dark py-4">
+        <div class="container text-center">
+            <ul class="nav justify-content-center align-items-center">
+                <li class="nav-item"><a href="portfolio.html" class="nav-link">Work</a></li>
+                <li class="nav-item"><a href="resume.html" class="nav-link">Resume</a></li>
+                <li class="nav-item">
+                    <a href="" class="navbar-brand logo-text">Daniel Biel</a>
+                </li>
+                <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const slug = urlParams.get("slug");
+
+            fetch("posts/posts.json")
+                .then(response => response.json())
+                .then(posts => {
+                    const post = posts.find(p => p.slug === slug);
+                    if (!post) {
+                        document.body.innerHTML = "<h1>Post not found</h1>";
+                        return;
+                    }
+
+                    // Set post details
+                    document.getElementById("post-title").textContent = post.title;
+                    document.getElementById("post-subtitle").textContent = post.subtitle || "";
+                    document.getElementById("post-category").textContent = post.category;
+                    document.getElementById("post-date").textContent = post.date;
+
+                    // Set hero background image
+                    if (post.hero_image) {
+                        const heroElement = document.getElementById("hero");
+                        heroElement.style.backgroundImage = `url('posts/images/${post.hero_image}')`;
+                        heroElement.style.backgroundSize = "cover";
+                        heroElement.style.backgroundPosition = "center";
+                        heroElement.style.color = "white"; // Ensure text is readable
+                        heroElement.style.padding = "15rem"; // Add spacing for text
+                        heroElement.style.textAlign = "center"; // Center-align text
+                    }
+
+                    // Load Markdown content
+                    fetch(`posts/${post.markdown_file}`)
+                        .then(response => response.text())
+                        .then(markdown => {
+                            const converter = new showdown.Converter();
+                            document.getElementById("post-content").innerHTML = converter.makeHtml(markdown);
+                        })
+                        .catch(error => console.error("Error loading Markdown:", error));
+                })
+                .catch(error => console.error("Error loading blog posts:", error));
+        });
+
+    </script>
+</body>
+</html>

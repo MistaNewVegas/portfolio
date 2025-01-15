@@ -95,39 +95,12 @@
     <div class="container mt-5">
         <!-- Blog Header -->
         <div class="hero">
-            <h1>Welcome to My Blog</h1>
-            <p>and welcome to my mind</p>
+            <h1>Lorem Ipsum</h1>
+            <p>Lorem ipsum dolor</p>
         </div>
 
-        <!-- Blog Post Template -->
-        <div class="blog-post">
-            <h1>Introduction to the processes involved in creating this website</h1>
-            <h2>By Daniel Biel — November 26, 2024</h2>
-            <hr>
-            <p>
-                The second project marked my first time using bootstrap at this scale - and it has taught me a lot about writing consistent code across all pages. To start, One major change from the last project to this one is the amount of css that I have written. In my previous projects I relied on one major css file to host all of the styling, often resulting in a file with 500+ lines, most of which were the result of ensuring responsive design. This time, I utilized bootstrap to handle most of the responsive design while I specified what I wanted and where. 
-            </p>
-        </div>
-
-        <div class="blog-post">
-            <h1>The mandatory video embed</h1>
-            <h2>By Daniel Biel — November 18, 2024</h2>
-            <hr>
-            <p>
-                Prepare to be amazed - I have lots of professional experience as a magician, and it is related to my career, so I would like to provide evidence of my magical capabilities that I believe could be of benefit to any industry. Since I will be marked for whether or not the contents of my site are on topic, I hope that this is a strong enough case for that because I do not have any videos of myself working.
-            </p>
-            <div class="ratio ratio-16x9">
-                <video src="media/videos/magic.mp4" 
-                title="Insane Magic Trick (MINDBLOWING) (GONE WRONG)" 
-                controls 
-                autoplay 
-                loop 
-                muted 
-                allowfullscreen></video>
-              </div>
-        </div>
-
-        <!-- Add more blog posts here -->
+        <!-- Blog Content -->
+        <div id="blog-list" class="mt-5"></div>
     </div>
 
     <footer class="footer bg-dark py-4">
@@ -145,5 +118,42 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("posts/posts.json")
+                .then(response => response.json())
+                .then(posts => {
+                    const blogList = document.getElementById("blog-list");
+
+                    posts.forEach(post => {
+                        const postElement = document.createElement("div");
+                        postElement.className = "blog-post";
+
+                        // Fetch the Markdown content
+                        fetch(`posts/${post.markdown_file}`)
+                            .then(response => response.text())
+                            .then(markdown => {
+                                // Extract the first two sentences as a preview
+                                let preview = markdown.split(/\.\s+/).slice(0, 2).join(". ") + "."; // Get first 2 sentences
+
+                                postElement.innerHTML = `
+                                    <h1><a href="post.html?slug=${post.slug}">${post.title}</a></h1>
+                                    <h2>${post.subtitle || ""}</h2>
+                                    <p><strong>Category:</strong> ${post.category}</p>
+                                    <p><small>${post.date}</small></p>
+                                    <p>${preview} <a href="post.html?slug=${post.slug}">Read More</a></p>
+                                    <hr>
+                                `;
+
+                                blogList.appendChild(postElement);
+                            })
+                            .catch(error => console.error(`Error loading Markdown for ${post.slug}:`, error));
+                    });
+                })
+                .catch(error => console.error("Error loading blog posts:", error));
+        });
+
+    </script>
 </body>
 </html>
