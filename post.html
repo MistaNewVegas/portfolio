@@ -30,12 +30,13 @@
 
 
         .hero {
-            position: relative; /* Enables overlay positioning */
-            color: white; /* Ensure text is readable */
+            position: relative;
+            color: white;
             text-align: center;
             padding: 5rem;
             background-size: cover;
             background-position: center;
+            align-content: center;
         }
 
         .hero .overlay {
@@ -44,51 +45,22 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
-            z-index: 1; /* Place overlay on top of background */
+            background-color: rgba(0, 0, 0, 0.78);
+            z-index: 1;
         }
 
         .hero h1, .hero h2 {
-            position: relative; /* Place text above overlay */
-            z-index: 2; /* Ensure text appears above the overlay */
+            position: relative;
+            z-index: 2;
         }
 
     </style>
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container-fluid">
-            <!-- Logo -->
-            <a class="navbar-brand logo-text" href="index.html">Daniel Biel</a>
-    
-            <!-- Hamburger Button for Mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-    
-            <!-- Collapsible Navigation Links -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="portfolio.html">Work</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="resume.html">Resume</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="blog.html">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div data-include="components/header.html"></div>
 
-    <div class="hero mt-5" id="hero">
+    <div class="container-fluid hero mt-5" id="hero">
         <div class="overlay"></div>
         <h1 id="post-title"></h1>
         <h2 id="post-subtitle"></h2>
@@ -104,19 +76,9 @@
         <div id="post-content"></div>
     </div>
 
-    <footer class="footer bg-dark py-4">
-        <div class="container text-center">
-            <ul class="nav justify-content-center align-items-center">
-                <li class="nav-item"><a href="portfolio.html" class="nav-link">Work</a></li>
-                <li class="nav-item"><a href="resume.html" class="nav-link">Resume</a></li>
-                <li class="nav-item">
-                    <a href="" class="navbar-brand logo-text">Daniel Biel</a>
-                </li>
-                <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-            </ul>
-        </div>
-    </footer>
+    <div data-include="components/footer.html"></div>
+
+    <script src="js/include.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
     <script>
@@ -145,10 +107,21 @@
                         heroElement.style.backgroundImage = `url('posts/images/${post.hero_image}')`;
                         heroElement.style.backgroundSize = "cover";
                         heroElement.style.backgroundPosition = "center";
-                        heroElement.style.color = "white"; // Ensure text is readable
-                        heroElement.style.padding = "15rem"; // Add spacing for text
-                        heroElement.style.textAlign = "center"; // Center-align text
+                        heroElement.style.color = "white";
+                        heroElement.style.textAlign = "center";
+
+                        // Function to resize the hero height
+                        function resizeHero() {
+                            const screenHeight = window.innerHeight;
+                            const maxHeight = screenHeight * 0.75; // 75% of screen height
+                            heroElement.style.height = `${maxHeight}px`;
+                        }
+
+                        // Resize the hero on page load and when the window is resized
+                        resizeHero();
+                        window.addEventListener("resize", resizeHero);
                     }
+
 
                     // Load Markdown content
                     fetch(`posts/${post.markdown_file}`)

@@ -73,10 +73,10 @@ body {
         margin-top: 10vw;
     }
     .footer .nav {
-        flex-direction: column; /* Stack navigation items vertically */
+        flex-direction: column;
     }
     .footer .nav-item {
-        margin-bottom: 10px; /* Add spacing between stacked items */
+        margin-bottom: 10px;
     }
 }
 
@@ -112,6 +112,6 @@ body {
 
 .hero h2 {
     font-size: 1.5rem;
-    color: #cccccc; /* Slightly lighter text */
+    color: #cccccc;
     margin-bottom: 2rem;
 }
