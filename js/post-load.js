@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Function to resize the hero height
                 function resizeHero() {
                     const screenHeight = window.innerHeight;
-                    const maxHeight = screenHeight * 0.75; // 75% of screen height
+                    const maxHeight = screenHeight * 0.75;
                     heroElement.style.height = `${maxHeight}px`;
                 }
 
