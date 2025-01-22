@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Post</title>
+    <title>Post</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="css/styles.css" rel="stylesheet"/>
+    <link rel="icon" type="image/x-icon" href="../media/images/favicon.ico">
 
     <style>
         body {
@@ -78,63 +79,12 @@
 
     <div data-include="components/footer.html"></div>
 
+
     <script src="js/include.js"></script>
-
+    <script src="js/post-load.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const slug = urlParams.get("slug");
-
-            fetch("posts/posts.json")
-                .then(response => response.json())
-                .then(posts => {
-                    const post = posts.find(p => p.slug === slug);
-                    if (!post) {
-                        document.body.innerHTML = "<h1>Post not found</h1>";
-                        return;
-                    }
-
-                    // Set post details
-                    document.getElementById("post-title").textContent = post.title;
-                    document.getElementById("post-subtitle").textContent = post.subtitle || "";
-                    document.getElementById("post-category").textContent = post.category;
-                    document.getElementById("post-date").textContent = post.date;
-
-                    // Set hero background image
-                    if (post.hero_image) {
-                        const heroElement = document.getElementById("hero");
-                        heroElement.style.backgroundImage = `url('posts/images/${post.hero_image}')`;
-                        heroElement.style.backgroundSize = "cover";
-                        heroElement.style.backgroundPosition = "center";
-                        heroElement.style.color = "white";
-                        heroElement.style.textAlign = "center";
-
-                        // Function to resize the hero height
-                        function resizeHero() {
-                            const screenHeight = window.innerHeight;
-                            const maxHeight = screenHeight * 0.75; // 75% of screen height
-                            heroElement.style.height = `${maxHeight}px`;
-                        }
-
-                        // Resize the hero on page load and when the window is resized
-                        resizeHero();
-                        window.addEventListener("resize", resizeHero);
-                    }
-
-
-                    // Load Markdown content
-                    fetch(`posts/${post.markdown_file}`)
-                        .then(response => response.text())
-                        .then(markdown => {
-                            const converter = new showdown.Converter();
-                            document.getElementById("post-content").innerHTML = converter.makeHtml(markdown);
-                        })
-                        .catch(error => console.error("Error loading Markdown:", error));
-                })
-                .catch(error => console.error("Error loading blog posts:", error));
-        });
-
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
 </body>
 </html>
